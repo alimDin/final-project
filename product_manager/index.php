@@ -2,7 +2,6 @@
 require('../model/database.php');
 require('../model/product_db.php');
 require('../model/category_db.php');
-
 $action = filter_input(INPUT_POST, 'action');
 if ($action == NULL) {
     $action = filter_input(INPUT_GET, 'action');
@@ -10,7 +9,6 @@ if ($action == NULL) {
         $action = 'list_products';
     }
 }
-
 if ($action == 'list_products') {
     $category_id = filter_input(INPUT_GET, 'category_id', 
             FILTER_VALIDATE_INT);
@@ -40,15 +38,18 @@ if ($action == 'list_products') {
 } else if ($action == 'add_product') {
     $category_id = filter_input(INPUT_POST, 'category_id', 
             FILTER_VALIDATE_INT);
-    $code = filter_input(INPUT_POST, 'code');
-    $name = filter_input(INPUT_POST, 'name');
-    $price = filter_input(INPUT_POST, 'price');
-    if ($category_id == NULL || $category_id == FALSE || $code == NULL || 
-            $name == NULL || $price == NULL || $price == FALSE) {
+    $date = filter_input(INPUT_POST, 'dateID');
+    $time = filter_input(INPUT_POST, 'timeID');
+    $item = filter_input(INPUT_POST, 'item');
+    $message = filter_input(INPUT_POST, 'message');
+
+
+    if ($category_id == NULL || $category_id == FALSE || $date == NULL || 
+            $item == NULL || $message == NULL || $time == NULL)  {
         $error = "Invalid product data. Check all fields and try again.";
         include('../errors/error.php');
     } else { 
-        add_product($category_id, $code, $name, $price);
+        add_product($category_id, $date, $time, $item, $message);
         header("Location: .?category_id=$category_id");
     }
 }    
